@@ -1,77 +1,301 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RiskEngine</title>
-  <link rel="stylesheet" href="styles.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiskEngine.dev — Stop Bonus Abuse in iGaming | Anti-Fraud API</title>
+    <meta name="description" content="Catch 95% of multi-accounters before you pay bonuses. Real-time anti-fraud API for iGaming, Crypto, Betting. 15 min integration.">
+    <style>
+        /* RESET + BASE */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0A0A0F;
+            --card: #12121A;
+            --accent: #FF3D5A; /* Красный под гемблу = опасность/стоп */
+            --accent-2: #00D9B2; /* Зеленый = бабки/save */
+            --text: #EAEAF0;
+            --text-muted: #8B8B9E;
+            --border: #1F1F2E;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        /* HERO - Тут продаем боль, а не фичи */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            background: radial-gradient(600px at 50% 0%, rgba(255,61,90,0.15), transparent);
+        }
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        .hero h1 span { color: var(--accent); }
+        .hero p {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 40px;
+        }
+        .hero p strong { color: var(--accent-2); }
+        .cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,61,90,0.3); }
+        .btn-secondary {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .trust-line {
+            margin-top: 40px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* HOW IT WORKS - Простая схема на 3 шага */
+        .section { padding: 80px 0; }
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .step {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+        }
+        .step-num {
+            width: 40px; height: 40px;
+            background: var(--accent);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; margin-bottom: 20px;
+        }
+        .step h3 { font-size: 20px; margin-bottom: 10px; }
+        .step p { color: var(--text-muted); }
+        .step code {
+            background: #000; padding: 2px 6px; border-radius: 4px;
+            font-size: 14px; color: var(--accent-2);
+        }
+
+        /* RULES TABLE - Показываем экспертизу. Это твой главный блок */
+        .rules-table {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 16px 20px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: #0F0F16; font-size: 14px; color: var(--text-muted); }
+        td strong { color: var(--accent-2); }
+        .tag {
+            font-size: 12px; padding: 4px 10px; border-radius: 20px;
+            background: rgba(255,61,90,0.1); color: var(--accent); font-weight: 600;
+        }
+        .tag.review { background: rgba(255,184,0,0.1); color: #FFB800; }
+
+        /* PRICING/ROI - B2B покупают из-за цифр */
+        .roi-box {
+            background: linear-gradient(135deg, rgba(0,217,178,0.1), rgba(255,61,90,0.1));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+        }
+        .roi-box h3 { font-size: 28px; margin-bottom: 20px; }
+        .roi-box .calc { font-size: 20px; color: var(--text-muted); }
+        .roi-box .calc strong { font-size: 32px; color: var(--accent-2); }
+
+        /* FOOTER CTA */
+        .footer-cta {
+            text-align: center;
+            padding: 100px 0;
+            background: radial-gradient(500px at 50% 100%, rgba(0,217,178,0.1), transparent);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .hero p { font-size: 18px; }
+            .section { padding: 60px 0; }
+        }
+    </style>
 </head>
 <body>
 
-<header class="header">
-  <div class="logo">
-    <img src="logo.svg" />
-    <span>RiskEngine</span>
-  </div>
-  <nav>
-    <a href="#features">Features</a>
-    <a href="#how">How it works</a>
-    <a href="#contact" class="btn-small">Get demo</a>
-  </nav>
-</header>
+    <!-- HERO: Продаем не библиотеку, а спасение от боли. Цифры + скорость -->
+    <section class="hero">
+        <div class="container">
+            <h1>Stop Paying Bonuses<br>to <span>Fake Players</span></h1>
+            <p>
+                Multi-accounters drain <strong>$20k+/mo</strong> from your promo budget. 
+                RiskEngine blocks 95% of them <strong>before you pay</strong>. API-first. 15 min integration.
+            </p>
+            <div class="cta-group">
+                <!-- ЗАМЕНИТЬ: Ссылку на свой Calendly или Telegram -->
+                <a href="https://t.me/your_username" class="btn btn-primary">Get Free Fraud Audit →</a>
+                <a href="#rules" class="btn btn-secondary">See How It Works</a>
+            </div>
+            <div class="trust-line">
+                Built for iGaming & Crypto. No chargebacks. No ML degree required.
+            </div>
+        </div>
+    </section>
 
-<section class="hero">
-  <div class="hero-inner">
-    <h1>Stop fraud before it happens</h1>
-    <p>Friendly, real-time risk detection for modern fintech and marketplaces.</p>
-    <div class="cta">
-      <a href="mailto:info@riskengine.dev?subject=Demo%20Request" class="btn">Request demo</a>
-      <a href="#features" class="btn-secondary">See features</a>
-    </div>
-  </div>
-</section>
+    <!-- HOW IT WORKS: 3 шага. CMO должен понять за 5 сек -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Integration in 3 Steps. 15 Minutes Total.</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <h3>User Signs Up</h3>
+                    <p>Player creates account on your site. You catch the event.</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <h3>Send Us Data</h3>
+                    <p>POST to our API: <code>{email, ip, device_fp}</code>. Response in 200ms.</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <h3>Get Decision</h3>
+                    <p>We return <code>allow</code>, <code>no_bonus</code>, or <code>block</code>. You save money.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="features" class="section">
-  <h2>What we detect</h2>
+    <!-- RULES: Это главный блок. Показывает что ты шаришь в гембле. Не для технарей, для Head of Risk -->
+    <section class="section" id="rules">
+        <div class="container">
+            <h2 class="section-title">10 Rules That Block 80% of Bonus Abusers</h2>
+            <div class="rules-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rule</th>
+                            <th>What We Check</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Уровень 1: Жесткий блок -->
+                        <tr>
+                            <td><strong>Device Fingerprint</strong></td>
+                            <td>Same `canvas + webgl` hash on 10 accounts</td>
+                            <td><span class="tag">BLOCK</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Datacenter IP/VPN</strong></td>
+                            <td>IP from AWS, Hetzner, or proxy detected</td>
+                            <td><span class="tag">BLOCK</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Disposable Email</strong></td>
+                            <td>`temp-mail.org`, `+tag` abuse, `qwe123` pattern</td>
+                            <td><span class="tag">BLOCK</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cookie Match</strong></td>
+                            <td>Browser already has our `user_id` from banned acc</td>
+                            <td><span class="tag">BLOCK</span></td>
+                        </tr>
+                        <!-- Уровень 2: Review -->
+                        <tr>
+                            <td><strong>Email Age < 7 Days</strong></td>
+                            <td>Email created this week. High bonus abuse risk</td>
+                            <td><span class="tag review">NO BONUS</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>IP Velocity</strong></td>
+                            <td>5 registrations / 10 min from one subnet</td>
+                            <td><span class="tag review">REVIEW</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phone Reuse</strong></td>
+                            <td>Same phone number on 3+ accounts</td>
+                            <td><span class="tag review">REVIEW</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Geo Mismatch</strong></td>
+                            <td>IP = KZ, Phone = RU, Browser = en_US</td>
+                            <td><span class="tag review">REVIEW</span></td>
+                        </tr>
+                        <!-- Уровень 3: Поведение -->
+                        <tr>
+                            <td><strong>Bonus Hunter Pattern</strong></td>
+                            <td>Reg → bonus → min dep → RTP 99% slots → withdraw</td>
+                            <td><span class="tag review">FLAG</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Multi-Acc Behavior</strong></td>
+                            <td>5 accs bet same amount in same slot at same time</td>
+                            <td><span class="tag">BLOCK</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 
-  <div class="grid">
-    <div class="card">🧾 Invoice fraud detection</div>
-    <div class="card">🧑‍💻 Account takeover signals</div>
-    <div class="card">💸 Payment anomalies</div>
-    <div class="card">⚡ Real-time risk scoring</div>
-  </div>
-</section>
+    <!-- ROI: B2B покупают цифры. Дай им калькулятор в голове -->
+    <section class="section">
+        <div class="container">
+            <div class="roi-box">
+                <h3>What This Means For Your P&L</h3>
+                <p class="calc">
+                    If you spend <strong>$50,000/mo</strong> on bonuses<br>
+                    We save you ~<strong>$12,000/mo</strong> by blocking fake players<br><br>
+                    Our price: <strong>$499/mo</strong>. That's 24x ROI.
+                </p>
+                <!-- ЗАМЕНИТЬ: Свою цену -->
+            </div>
+        </div>
+    </section>
 
-<section id="how" class="section soft">
-  <h2>How it works</h2>
-  <div class="steps">
-    <div>1. Connect your data</div>
-    <div>2. We analyze behavior</div>
-    <div>3. You get risk score</div>
-    <div>4. Block or review instantly</div>
-  </div>
-</section>
+    <!-- FOOTER CTA: Дожим. Убери pip install навсегда -->
+    <section class="footer-cta">
+        <div class="container">
+            <h2 class="section-title">Stop Burning Your Promo Budget</h2>
+            <p style="color: var(--text-muted); margin-bottom: 40px; font-size: 18px;">
+                Get a free audit. We'll scan your last 10k signups and tell you<br>how much money you're losing to multi-accounters right now.
+            </p>
+            <div class="cta-group">
+                <!-- ЗАМЕНИТЬ: Ссылку на свой Telegram/Calendly -->
+                <a href="https://t.me/your_username" class="btn btn-primary">Book Free 15-min Audit →</a>
+            </div>
+            <div class="trust-line" style="margin-top: 60px;">
+                RiskEngine.dev © 2026. API Docs | Terms | <a href="mailto:hello@riskengine.dev" style="color: var(--text-muted);">hello@riskengine.dev</a>
+                <!-- ЗАМЕНИТЬ: Свою почту -->
+            </div>
+        </div>
+    </section>
 
-<section class="section">
-  <h2>Example fraud signals</h2>
-  <ul>
-    <li>New vendor + large invoice</li>
-    <li>Bank details changed before payout</li>
-    <li>Login from new country + transaction</li>
-    <li>Unusual invoice frequency spike</li>
-  </ul>
-</section>
-
-<section id="contact" class="cta-box">
-  <h2>Want to see it in action?</h2>
-  <p>We’ll run a free fraud exposure check on your data.</p>
-  <a href="mailto:info@riskengine.dev?subject=Risk%20Audit" class="btn">Get free audit</a>
-</section>
-
-<footer>
-  <p>© RiskEngine.dev</p>
-</footer>
-
-<script src="script.js"></script>
 </body>
 </html>
