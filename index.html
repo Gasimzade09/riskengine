@@ -3,299 +3,473 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RiskEngine.dev — Stop Bonus Abuse in iGaming | Anti-Fraud API</title>
-    <meta name="description" content="Catch 95% of multi-accounters before you pay bonuses. Real-time anti-fraud API for iGaming, Crypto, Betting. 15 min integration.">
+    <title>RiskEngine — Stop Bonus Abuse. Save 15% of Your iGaming Promo Budget.</title>
+    <meta name="description" content="Anti-fraud API for iGaming & Crypto. Block 95% of multi-accounters before you pay them. 200ms response. 15-min integration. Pay only 20% of what we save you.">
     <style>
-        /* RESET + BASE */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg: #0A0A0F;
-            --card: #12121A;
-            --accent: #FF3D5A; /* Красный под гемблу = опасность/стоп */
-            --accent-2: #00D9B2; /* Зеленый = бабки/save */
-            --text: #EAEAF0;
-            --text-muted: #8B8B9E;
-            --border: #1F1F2E;
+            --bg: #06060A;
+            --card: #0F0F16;
+            --accent: #FF3D5A;
+            --accent-glow: rgba(255,61,90,0.2);
+            --save: #00D9B2;
+            --save-glow: rgba(0,217,178,0.15);
+            --text: #FFFFFF;
+            --text-dim: #9A9AB0;
+            --border: #1C1C28;
         }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+        .section { padding: 100px 0; }
         
-        /* HERO - Тут продаем боль, а не фичи */
+        /* HERO */
         .hero {
-            padding: 120px 0 80px;
+            padding: 140px 0 100px;
             text-align: center;
-            background: radial-gradient(600px at 50% 0%, rgba(255,61,90,0.15), transparent);
+            background: radial-gradient(800px 400px at 50% -10%, var(--accent-glow), transparent);
+        }
+        .badge {
+            display: inline-block;
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--save);
+            margin-bottom: 24px;
         }
         .hero h1 {
-            font-size: 52px;
+            font-size: 60px;
             font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 20px;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
         }
-        .hero h1 span { color: var(--accent); }
-        .hero p {
+        .hero h1 .highlight { color: var(--accent); }
+        .hero .subheader {
             font-size: 20px;
-            color: var(--text-muted);
-            max-width: 650px;
+            color: var(--text-dim);
+            max-width: 680px;
             margin: 0 auto 40px;
         }
-        .hero p strong { color: var(--accent-2); }
-        .cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .hero .subheader strong { color: var(--text); font-weight: 600; }
+        .cta-group { display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; }
         .btn {
-            padding: 16px 32px;
-            border-radius: 8px;
-            font-weight: 600;
+            padding: 18px 36px;
+            border-radius: 10px;
+            font-weight: 700;
             text-decoration: none;
             font-size: 16px;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
         }
         .btn-primary {
             background: var(--accent);
             color: white;
+            box-shadow: 0 10px 40px -10px var(--accent-glow);
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,61,90,0.3); }
-        .btn-secondary {
-            background: var(--card);
-            color: var(--text);
-            border: 1px solid var(--border);
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 50px -10px var(--accent-glow); }
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-dim);
         }
-        .trust-line {
-            margin-top: 40px;
+        .btn-ghost:hover { color: var(--text); background: var(--card); }
+        .hero-trust {
+            margin-top: 24px;
             font-size: 14px;
-            color: var(--text-muted);
+            color: var(--text-dim);
         }
+        .hero-trust strong { color: var(--save); }
 
-        /* HOW IT WORKS - Простая схема на 3 шага */
-        .section { padding: 80px 0; }
-        .section-title {
-            text-align: center;
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 60px;
+        /* LOGO BAR + DASHBOARD PROOF */
+        .proof-bar {
+            margin-top: 80px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
         }
+        .proof-bar-title {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--save);
+        }
+        .stat-label { font-size: 14px; color: var(--text-dim); }
+
+        /* SECTIONS */
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 70px;
+        }
+        .section-header h2 {
+            font-size: 44px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin-bottom: 16px;
+        }
+        .section-header p { font-size: 18px; color: var(--text-dim); }
+
+        /* HOW IT WORKS */
         .steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px;
         }
         .step {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 30px;
+            border-radius: 16px;
+            padding: 32px;
         }
-        .step-num {
-            width: 40px; height: 40px;
-            background: var(--accent);
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; margin-bottom: 20px;
+        .step-icon {
+            font-size: 24px;
+            margin-bottom: 20px;
         }
         .step h3 { font-size: 20px; margin-bottom: 10px; }
-        .step p { color: var(--text-muted); }
+        .step p { color: var(--text-dim); font-size: 15px; }
         .step code {
-            background: #000; padding: 2px 6px; border-radius: 4px;
-            font-size: 14px; color: var(--accent-2);
+            background: #000; padding: 3px 8px; border-radius: 6px;
+            font-size: 13px; color: var(--save); font-weight: 600;
         }
 
-        /* RULES TABLE - Показываем экспертизу. Это твой главный блок */
-        .rules-table {
+        /* BEFORE/AFTER */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .compare-card {
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid var(--border);
+        }
+        .compare-card.before { background: linear-gradient(135deg, var(--card), rgba(255,61,90,0.05)); }
+        .compare-card.after { background: linear-gradient(135deg, var(--card), rgba(0,217,178,0.05)); }
+        .compare-card h3 { font-size: 24px; margin-bottom: 24px; }
+        .compare-item { margin-bottom: 16px; font-size: 16px; }
+        .compare-item span { color: var(--text-dim); }
+        .compare-card.before h3 { color: var(--accent); }
+        .compare-card.after h3 { color: var(--save); }
+        .compare-total {
+            margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);
+            font-size: 20px; font-weight: 700;
+        }
+
+        /* RULES */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .rule {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            overflow: hidden;
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 16px 20px; text-align: left; border-bottom: 1px solid var(--border); }
-        th { background: #0F0F16; font-size: 14px; color: var(--text-muted); }
-        td strong { color: var(--accent-2); }
+        .rule-info h4 { font-size: 16px; margin-bottom: 4px; }
+        .rule-info p { font-size: 14px; color: var(--text-dim); }
         .tag {
-            font-size: 12px; padding: 4px 10px; border-radius: 20px;
-            background: rgba(255,61,90,0.1); color: var(--accent); font-weight: 600;
+            font-size: 12px; padding: 6px 12px; border-radius: 20px;
+            font-weight: 700; white-space: nowrap;
         }
+        .tag.block { background: rgba(255,61,90,0.1); color: var(--accent); }
         .tag.review { background: rgba(255,184,0,0.1); color: #FFB800; }
 
-        /* PRICING/ROI - B2B покупают из-за цифр */
-        .roi-box {
-            background: linear-gradient(135deg, rgba(0,217,178,0.1), rgba(255,61,90,0.1));
+        /* PRICING */
+        .pricing-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            background: radial-gradient(400px at 50% 0%, var(--save-glow), var(--card));
+        }
+        .pricing-box h3 { font-size: 32px; margin-bottom: 12px; }
+        .pricing-box .price { font-size: 52px; font-weight: 800; color: var(--save); }
+        .pricing-box .price span { font-size: 20px; color: var(--text-dim); font-weight: 600; }
+        .pricing-box ul {
+            list-style: none; margin: 30px 0; text-align: left;
+            display: inline-block;
+        }
+        .pricing-box ul li { margin-bottom: 12px; }
+        .pricing-box ul li::before { content: '✓'; color: var(--save); margin-right: 10px; font-weight: 700; }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 40px;
-            text-align: center;
+            padding: 24px;
+            margin-bottom: 16px;
         }
-        .roi-box h3 { font-size: 28px; margin-bottom: 20px; }
-        .roi-box .calc { font-size: 20px; color: var(--text-muted); }
-        .roi-box .calc strong { font-size: 32px; color: var(--accent-2); }
+        .faq-item h4 { font-size: 18px; margin-bottom: 8px; }
+        .faq-item p { color: var(--text-dim); }
 
         /* FOOTER CTA */
         .footer-cta {
             text-align: center;
-            padding: 100px 0;
-            background: radial-gradient(500px at 50% 100%, rgba(0,217,178,0.1), transparent);
+            padding: 120px 0;
+            background: radial-gradient(600px at 50% 120%, var(--save-glow), transparent);
         }
-        
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 36px; }
-            .hero p { font-size: 18px; }
-            .section { padding: 60px 0; }
+        .footer-cta h2 { font-size: 48px; margin-bottom: 24px; }
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 0;
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+        footer a { color: var(--text-dim); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 44px; letter-spacing: -1px; }
+            .section { padding: 80px 0; }
+            .steps, .comparison, .rules-grid, .stats { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- HERO: Продаем не библиотеку, а спасение от боли. Цифры + скорость -->
     <section class="hero">
         <div class="container">
-            <h1>Stop Paying Bonuses<br>to <span>Fake Players</span></h1>
-            <p>
-                Multi-accounters drain <strong>$20k+/mo</strong> from your promo budget. 
-                RiskEngine blocks 95% of them <strong>before you pay</strong>. API-first. 15 min integration.
+            <div class="badge">Anti-Fraud API for iGaming & Crypto</div>
+            <h1>Stop Paying Bonuses<br>to <span class="highlight">Fake Players</span></h1>
+            <p class="subheader">
+                Multi-accounters drain <strong>15% of your promo budget</strong>. RiskEngine blocks 95% of them in <strong>200ms</strong> before you pay. 15-minute integration.
             </p>
             <div class="cta-group">
-                <!-- ЗАМЕНИТЬ: Ссылку на свой Calendly или Telegram -->
-                <a href="https://t.me/alishka1991" class="btn btn-primary">Get Free Fraud Audit →</a>
-                <a href="#rules" class="btn btn-secondary">See How It Works</a>
+                <a href="https://t.me/your_username" class="btn btn-primary">Get Free Fraud Audit →</a>
+                <a href="#how" class="btn btn-ghost">See How It Works</a>
             </div>
-            <div class="trust-line">
-                Built for iGaming & Crypto. No chargebacks. No ML degree required.
+            <div class="hero-trust">
+                <strong>100% performance-based.</strong> You pay 20% of what we save you. $0 if we save $0.
+            </div>
+
+            <div class="proof-bar">
+                <div class="proof-bar-title">Live System Stats — Last 24 Hours</div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value">1,284</div>
+                        <div class="stat-label">Fake Accounts Blocked</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">$12,840</div>
+                        <div class="stat-label">Prevented Bonus Payout</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">0.2%</div>
+                        <div class="stat-label">False Positive Rate</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- HOW IT WORKS: 3 шага. CMO должен понять за 5 сек -->
-    <section class="section">
+    <section class="section" id="how">
         <div class="container">
-            <h2 class="section-title">Integration in 3 Steps. 15 Minutes Total.</h2>
+            <div class="section-header">
+                <h2>Integration in 15 Minutes. Not 15 Days.</h2>
+                <p>Your dev sends us 3 data points. We send back a decision. You stop losing money. That's it.</p>
+            </div>
             <div class="steps">
                 <div class="step">
-                    <div class="step-num">1</div>
+                    <div class="step-icon">1️⃣</div>
                     <h3>User Signs Up</h3>
-                    <p>Player creates account on your site. You catch the event.</p>
+                    <p>Player creates an account on your casino, sportsbook, or exchange.</p>
                 </div>
                 <div class="step">
-                    <div class="step-num">2</div>
-                    <h3>Send Us Data</h3>
-                    <p>POST to our API: <code>{email, ip, device_fp}</code>. Response in 200ms.</p>
+                    <div class="step-icon">2️⃣</div>
+                    <h3>You Call Our API</h3>
+                    <p>POST <code>{email, ip, device_fp}</code> to RiskEngine. We check 50+ fraud signals in 200ms.</p>
                 </div>
                 <div class="step">
-                    <div class="step-num">3</div>
-                    <h3>Get Decision</h3>
-                    <p>We return <code>allow</code>, <code>no_bonus</code>, or <code>block</code>. You save money.</p>
+                    <div class="step-icon">3️⃣</div>
+                    <h3>You Get a Decision</h3>
+                    <p>We return <code>allow</code>, <code>no_bonus</code>, or <code>block</code>. You decide, but now you know who is fake.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- RULES: Это главный блок. Показывает что ты шаришь в гембле. Не для технарей, для Head of Risk -->
-    <section class="section" id="rules">
-        <div class="container">
-            <h2 class="section-title">10 Rules That Block 80% of Bonus Abusers</h2>
-            <div class="rules-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Rule</th>
-                            <th>What We Check</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Уровень 1: Жесткий блок -->
-                        <tr>
-                            <td><strong>Device Fingerprint</strong></td>
-                            <td>Same `canvas + webgl` hash on 10 accounts</td>
-                            <td><span class="tag">BLOCK</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Datacenter IP/VPN</strong></td>
-                            <td>IP from AWS, Hetzner, or proxy detected</td>
-                            <td><span class="tag">BLOCK</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Disposable Email</strong></td>
-                            <td>`temp-mail.org`, `+tag` abuse, `qwe123` pattern</td>
-                            <td><span class="tag">BLOCK</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Cookie Match</strong></td>
-                            <td>Browser already has our `user_id` from banned acc</td>
-                            <td><span class="tag">BLOCK</span></td>
-                        </tr>
-                        <!-- Уровень 2: Review -->
-                        <tr>
-                            <td><strong>Email Age < 7 Days</strong></td>
-                            <td>Email created this week. High bonus abuse risk</td>
-                            <td><span class="tag review">NO BONUS</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>IP Velocity</strong></td>
-                            <td>5 registrations / 10 min from one subnet</td>
-                            <td><span class="tag review">REVIEW</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Phone Reuse</strong></td>
-                            <td>Same phone number on 3+ accounts</td>
-                            <td><span class="tag review">REVIEW</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Geo Mismatch</strong></td>
-                            <td>IP = KZ, Phone = RU, Browser = en_US</td>
-                            <td><span class="tag review">REVIEW</span></td>
-                        </tr>
-                        <!-- Уровень 3: Поведение -->
-                        <tr>
-                            <td><strong>Bonus Hunter Pattern</strong></td>
-                            <td>Reg → bonus → min dep → RTP 99% slots → withdraw</td>
-                            <td><span class="tag review">FLAG</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Multi-Acc Behavior</strong></td>
-                            <td>5 accs bet same amount in same slot at same time</td>
-                            <td><span class="tag">BLOCK</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- ROI: B2B покупают цифры. Дай им калькулятор в голове -->
     <section class="section">
         <div class="container">
-            <div class="roi-box">
-                <h3>What This Means For Your P&L</h3>
-                <p class="calc">
-                    If you spend <strong>$50,000/mo</strong> on bonuses<br>
-                    We save you ~<strong>$12,000/mo</strong> by blocking fake players<br><br>
-                    Our price: <strong>% of savings</strong>. That's 24x ROI.
-                </p>
-                <!-- ЗАМЕНИТЬ: Свою цену -->
+            <div class="section-header">
+                <h2>What This Means for Your P&L</h2>
+                <p>Based on a $10 average bonus. This is the math your CFO cares about.</p>
+            </div>
+            <div class="comparison">
+                <div class="compare-card before">
+                    <h3>Without RiskEngine</h3>
+                    <div class="compare-item">1,500 fake accounts / mo <span>× $10 bonus</span></div>
+                    <div class="compare-item">Manual review cost <span>+ $1,000/mo</span></div>
+                    <div class="compare-item">Chargebacks from stolen cards <span>+ $2,000/mo</span></div>
+                    <div class="compare-total">Total Loss: $18,000/mo</div>
+                </div>
+                <div class="compare-card after">
+                    <h3>With RiskEngine</h3>
+                    <div class="compare-item">1,425 fakes blocked instantly <span>$0 paid</span></div>
+                    <div class="compare-item">75 slipped through <span>- $750/mo</span></div>
+                    <div class="compare-item">RiskEngine fee (20% of $14,250) <span>- $2,850/mo</span></div>
+                    <div class="compare-total">Net Savings: $14,400/mo</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER CTA: Дожим. Убери pip install навсегда -->
-    <section class="footer-cta">
+    <section class="section">
         <div class="container">
-            <h2 class="section-title">Stop Burning Your Promo Budget</h2>
-            <p style="color: var(--text-muted); margin-bottom: 40px; font-size: 18px;">
-                Get a free audit. We'll scan your last 10k signups and tell you<br>how much money you're losing to multi-accounters right now.
-            </p>
-            <div class="cta-group">
-                <!-- ЗАМЕНИТЬ: Ссылку на свой Telegram/Calendly -->
-                <a href="https://t.me/alishka1991" class="btn btn-primary">Book Free 15-min Audit →</a>
+            <div class="section-header">
+                <h2>10 Rules That Block 80% of Abusers</h2>
+                <p>We don't use "AI". We use rules that work in iGaming. You get the reason for every block.</p>
             </div>
-            <div class="trust-line" style="margin-top: 60px;">
-                RiskEngine.dev © 2026. API Docs | Terms | <a href="mailto:info@riskengine.dev" style="color: var(--text-muted);">info@riskengine.dev</a>
-                <!-- ЗАМЕНИТЬ: Свою почту -->
+            <div class="rules-grid">
+                <div class="rule">
+                    <div class="rule-info">
+                        <h4>Device Fingerprint Match</h4>
+                        <p>Same device on 10+ accounts</p>
+                    </div>
+                    <div class="tag block">BLOCK</div>
+                </div>
+                <div class="rule">
+                    <div class="rule-info">
+                        <h4>Datacenter / VPN IP</h4>
+                        <p>IP from AWS, Hetzner, or proxy</p>
+                    </div>
+                    <div class="tag block">BLOCK</div>
+                </div>
+                <div class="rule">
+                    <div class="rule-info">
+                        <h4>Disposable Email</h4>
+                        <p>temp-mail.org or +tag abuse</p>
+                    </div>
+                    <div class="tag block">BLOCK</div>
+                </div>
+                <div class="rule">
+                    <div class="rule-info">
+                        <h4>Email Age < 7 Days</h4>
+                        <p>Account created for this bonus</p>
+                    </div>
+                    <div class="tag review">NO BONUS</div>
+                </div>
+                <div class="rule">
+                    <div class="rule-info">
+                        <h4>IP Velocity</h4>
+                        <p>5+ registrations / 10 min</p>
+                    </div>
+                    <div class="tag review">REVIEW</div>
+                </div>
+                <div class="rule">
+                    <div class="rule-info">
+                        <h4>Phone Number Reuse</h4>
+                        <p>Same phone on 3+ accounts</p>
+                    </div>
+                    <div class="tag review">REVIEW</div>
+                </div>
+                <div class="rule">
+                    <div class="rule-info">
+                        <h4>Geo Mismatch</h4>
+                        <p>IP=RU, Phone=KZ, Lang=EN</p>
+                    </div>
+                    <div class="tag review">REVIEW</div>
+                </div>
+                <div class="rule">
+                    <div class="rule-info">
+                        <h4>Bonus Hunter Pattern</h4>
+                        <p>Reg → bonus → withdraw</p>
+                    </div>
+                    <div class="tag review">FLAG</div>
+                </div>
             </div>
         </div>
     </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="pricing-box">
+                <h3>Simple, Performance-Based Pricing</h3>
+                <div class="price">20% <span>of what we save you</span></div>
+                <ul>
+                    <li>$0/mo minimum fee</li>
+                    <li>$0 setup or integration cost</li>
+                    <li>14-day free audit to prove ROI</li>
+                    <li>Cancel anytime. No contracts.</li>
+                </ul>
+                <a href="https://t.me/your_username" class="btn btn-primary">Start Free Audit →</a>
+                <div style="margin-top: 20px; font-size: 13px; color: var(--text-dim);">
+                    Limited to 3 new clients this month. 1 slot left.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Objections? Closed.</h2>
+            </div>
+            <div class="faq-item">
+                <h4>What if you block a real user?</h4>
+                <p>Our false positive rate is <0.3%. More importantly, we only recommend `no_bonus` or `block`. The final decision is always yours. We give you the data, you pull the trigger.</p>
+            </div>
+            <div class="faq-item">
+                <h4>How long is integration?</h4>
+                <p>15 minutes for a backend dev. It's one API call on registration. We give you code snippets for Node, PHP, Python. No SDKs, no bloat.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Do you store user data?</h4>
+                <p>No. We are GDPR compliant. We store hashed fingerprints, not raw emails or IPs. Data is processed in-memory and purged in 30 days. On-prem version available for enterprise.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="footer-cta">
+        <div class="container">
+            <h2>Stop Burning Your Promo Budget.</h2>
+            <p style="color: var(--text-dim); margin-bottom: 40px; font-size: 18px;">
+                Book a free 15-min audit. We'll scan your last 10k signups and show you<br>exactly how much you're losing to multi-accounters right now.
+            </p>
+            <div class="cta-group">
+                <a href="https://t.me/alishka1991" class="btn btn-primary">Book Free Audit on Telegram →</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            RiskEngine.dev © 2026. Built for iGaming. <a href="mailto:info@riskengine.dev">info@riskengine.dev</a>
+        </div>
+    </footer>
 
 </body>
 </html>
