@@ -261,7 +261,9 @@
     </style>
 </head>
 <body>
-
+<button id="waitlistBtn" class="waitlist-btn">
+    Join Waitlist
+</button>
     <section class="hero">
         <div class="container">
             <div class="badge">Anti-Fraud API for iGaming & Crypto</div>
@@ -471,6 +473,58 @@
             RiskEngine.dev © 2026. Built for iGaming. <a href="mailto:info@riskengine.dev">info@riskengine.dev</a>
         </div>
     </footer>
+<div id="waitlistModal" class="modal">
+    <div class="modal-content">
+        <h3>Join Waitlist</h3>
 
+        <input id="firstName" placeholder="First Name *" />
+        <input id="lastName" placeholder="Last Name" />
+        <input id="companyName" placeholder="Company Name" />
+        <input id="industry" placeholder="Industry" />
+        <input id="email" placeholder="Business Email *" />
+
+        <div class="modal-actions">
+            <button onclick="closeModal()">Cancel</button>
+            <button class="primary" onclick="submitWaitlist()">Join</button>
+        </div>
+    </div>
+</div>
+    <script>
+const modal = document.getElementById("waitlistModal");
+const btn = document.getElementById("waitlistBtn");
+
+btn.onclick = () => {
+    modal.style.display = "flex";
+};
+
+function closeModal() {
+    modal.style.display = "none";
+}
+
+async function submitWaitlist() {
+    const data = {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        companyName: document.getElementById("companyName").value,
+        industry: document.getElementById("industry").value,
+        email: document.getElementById("email").value,
+    };
+
+    if (!data.email || !data.firstName) {
+        alert("Fill required fields");
+        return;
+    }
+
+    await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+    });
+
+    alert("You're on the waitlist!");
+
+    modal.style.display = "none";
+}
+</script>
 </body>
 </html>
