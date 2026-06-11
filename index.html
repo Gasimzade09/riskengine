@@ -587,7 +587,7 @@ async function submitWaitlist() {
         return;
     }
 
-    await fetch("http://app.riskengine.dev/api/waitlist", {
+    await fetch("http://api.riskengine.dev/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
